@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../polymer-redux/polymer-redux.html">
+
 <!--
  Copyright 2017 | Optinomic GmbH.
  http://www.optinomic.com/
@@ -400,12 +401,8 @@ const AsyncActionsBehavior = {
                     type: 'GET_DATA_STARTED'
                 });
 
-
-                // GET /stays/:stay_id/survey_responses/:module_identifier/full
-                // GET /patients/:patient_id/survey_responses/:module_identifier/full
-
-                var module_identifier = 'ch.suedhang.apps.bscl_anq';
-                module_identifier = 'ch.suedhang.apps.bdi';
+                var module_identifier = requested_app_id === undefined ? helpers.getAppID() : requested_app_id;
+                console.log('actionGetSurveyResponses: ', module_identifier);
 
                 var current_stay_id = parseInt(helpers.getStayID());
 
@@ -608,6 +605,13 @@ const AsyncActionsBehavior = {
 // ----------------------------
 // Helpers
 // ----------------------------
+
+
+var requested_app_id = null;
+
+setRequestGetSurveyResponses = function(app_id) {
+    requested_app_id = app_id;
+};
 
 formatDateCH = function(date_string) {
     if (date_string !== undefined) {
